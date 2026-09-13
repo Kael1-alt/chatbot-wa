@@ -23,28 +23,22 @@ client.on('ready', () => {
     console.log('Selesai! Bot WhatsApp Anda sudah aktif dan siap digunakan.');
 });
 
-// 4. Membaca dan membalas pesan otomatis
-// 4. Membaca dan membalas pesan otomatis (DAPAT DITAMBAH KATA KUNCI LAIN)
+// 4. Membalas setiap pesan masuk dengan pesan otomatis
 client.on('message', async (msg) => {
-    // Mengubah semua pesan masuk menjadi huruf kecil agar bot tidak sensitif huruf kapital
-    const pesanMasuk = msg.body.toLowerCase();
+    const chat = await msg.getChat();
 
-    if (pesanMasuk === '!ping') {
-        // Balasan jika mengetik !ping
-        await msg.reply('pong');
-
-    } else if (pesanMasuk === 'halo' || pesanMasuk === 'hai') {
-        // Balasan jika mengetik halo atau hai
-        await msg.reply('Halo juga! Ada yang bisa saya bantu? 👋');
-
-    } else if (pesanMasuk === 'p') {
-        // Balasan jika mengetik p doang
-        await msg.reply('Ketik yang jelas ya, jangan cuma P. 🙂');
-
-    } else if (pesanMasuk === 'tes') {
-        // Fitur memberi reaksi emoji jempol otomatis (Sama seperti fungsi cURL di gambar Anda)
-        await msg.react('👍');
+    if (chat.isGroup) {
+        return;
     }
+
+    await msg.reply(
+        'HALO SAYA ASSISTEN AI NYA ALDI,\n' +
+        'Terimakasih sudah menghubungi. Apa yang anda butuhkan?\n' +
+        'Tunggu sampai owner ONLINE, UNTUK BERKOMUNIKASI LEBIH LANJUT.'
+    );
+});
+
+// Memberikan reaksi otomatis pada pesan yang berisi tautan target
 client.on('message', async (msg) => {
     try {
         // MASUKKAN LINK OBROLAN / GRUP YANG INGIN ANDA TARGETKAN DISINI
@@ -64,7 +58,6 @@ client.on('message', async (msg) => {
     } catch (error) {
         console.error('Gagal memproses reaksi link:', error);
     }
-});
 });
 
 // 5. Jalankan program
